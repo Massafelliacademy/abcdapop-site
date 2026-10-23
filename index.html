@@ -35,7 +35,7 @@ window.ABC_CONFIG = {
   "precoPor": 75,
   "precoOferta": 67,
   "ofertaAtiva": true,
-  "segundosNoPreco": 4,
+  "segundosNoPreco": 2,
   "segundosNaWanessa": 7,
   "tocarAoVer": true,
   "barraFixa": true
@@ -1126,7 +1126,7 @@ class Component extends DCLogic {
           this.setState({ pdPausado: true });
         }
       },
-      setPreco: (el) => this.vigia(el, 'Preco', () => this.props.segundosNoPreco ?? 4),
+      setPreco: (el) => this.vigia(el, 'Preco', () => this.props.segundosNoPreco ?? 2),
       setQuem: (el) => this.vigia(el, 'Quem', () => this.props.segundosNaWanessa ?? 7),
       fecharOferta: () => this.setState({ oferta: false }),
       clicouCompra: () => this.setState({ clicou: true })
