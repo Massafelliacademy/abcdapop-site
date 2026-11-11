@@ -209,7 +209,7 @@ a:focus-visible,summary:focus-visible{outline:2px solid #FFCB5C;outline-offset:4
 .ap-play{animation:apPulse 2.4s ease-out infinite}
 .ap-comprar{letter-spacing:.03em;animation:apPisca 1.2s ease-in-out infinite}
 .ap-comprar:hover{animation-play-state:paused}
-@keyframes apPisca{0%,100%{transform:scale(1);filter:brightness(1);box-shadow:0 0 0 0 rgba(255,180,29,.8)}50%{transform:scale(1.05);filter:brightness(1.25) saturate(1.1);box-shadow:0 0 0 6px rgba(255,180,29,.45)}80%{box-shadow:0 0 0 16px rgba(255,180,29,0)}}
+@keyframes apPisca{0%,100%{transform:translateY(0) scale(1);filter:brightness(1);box-shadow:0 6px 0 var(--edge),0 0 0 0 rgba(255,180,29,.8),0 18px 26px -8px rgba(0,0,0,.55)}50%{transform:translateY(-2px) scale(1.05);filter:brightness(1.25) saturate(1.1);box-shadow:0 8px 0 var(--edge),0 0 0 6px rgba(255,180,29,.45),0 24px 30px -8px rgba(0,0,0,.55)}80%{box-shadow:0 6px 0 var(--edge),0 0 0 16px rgba(255,180,29,0),0 18px 26px -8px rgba(0,0,0,.55)}}
 .ap-strike{position:relative;display:inline-block}
 .ap-strike::after{content:"";position:absolute;left:-6px;right:-6px;top:54%;height:4px;border-radius:2px;background:#C2171F;transform-origin:0 50%;transform:rotate(-7deg)}
 .ap-strike2{position:relative;display:inline-block}
@@ -360,7 +360,80 @@ details[open] .ap-ans{animation:apFade .35s ease both}
 .ap-pd-chip.c1{top:5%;left:0}
 .ap-pd-chip.c2{bottom:16%;right:0}
 }
-@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none !important;transition:none !important}.ap-h1-b{clip-path:none}.ap-h1-b::after{transform:none}.ap-cox-grid i,.ap-carimbo,.ap-pct-in{opacity:1}.ap-pct-in{transform:none}.ap-cine,.ap-blackout{display:none}}
+/* ===== 3D (proposta de 11/11): capa com profundidade, anel de módulos, moldura, preço, moeda e botões ===== */
+.ap-capa .ap-fx,.ap-capa .ap-wan,.ap-capa .ap-bokeh,.ap-capa .ap-brilhos,.ap-capa .ap-hero-tit,.ap-capa .ap3d-c{transition:translate .35s ease-out}
+.ap-capa .ap-bokeh{translate:calc(var(--rx,0)*34px) calc(var(--ry,0)*22px)}
+.ap-capa .ap-brilhos{translate:calc(var(--rx,0)*22px) calc(var(--ry,0)*14px)}
+.ap-capa .ap-fx{translate:calc(var(--rx,0)*18px) calc(var(--ry,0)*12px)}
+.ap-capa .ap-wan{translate:calc(var(--rx,0)*-12px) calc(var(--ry,0)*-6px)}
+.ap-capa .ap-hero-tit{translate:calc(var(--rx,0)*7px) calc(var(--ry,0)*4px)}
+.ap-capa .ap3d-c{translate:calc(var(--rx,0)*-30px) calc(var(--ry,0)*-18px)}
+/* capas flutuando em 3D ao lado da Wan */
+.ap3d-c{position:absolute;z-index:0;width:30%;max-width:190px;aspect-ratio:523/774;border-radius:14px;overflow:hidden;box-shadow:0 0 0 2px rgba(255,180,29,.75),0 30px 50px -18px rgba(0,0,0,.9),0 0 46px rgba(255,120,40,.35);opacity:0}
+.ap3d-c img{display:block;width:100%;height:100%;object-fit:cover}
+.ap3d-c::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.34),rgba(255,255,255,0) 38%,rgba(0,0,0,.28))}
+.ap3d-c.c1{left:0;top:13%;animation:apFadeIn .8s ease 1.5s both,ap3dCa 8s ease-in-out 1.5s infinite}
+.ap3d-c.c2{right:0;top:27%;animation:apFadeIn .8s ease 1.8s both,ap3dCb 9s ease-in-out 1.8s infinite}
+.ap3d-c.f1{left:max(3%,calc(50% - 600px));top:16%;width:170px;animation:apFadeIn .8s ease both,ap3dCa 8s ease-in-out infinite}
+.ap3d-c.f2{right:max(3%,calc(50% - 600px));top:22%;width:170px;animation:apFadeIn .8s ease both,ap3dCb 9s ease-in-out infinite}
+@media (max-width:1100px){.ap3d-c.f1,.ap3d-c.f2{display:none}}
+@keyframes ap3dCa{0%,100%{transform:perspective(760px) rotateY(34deg) rotateZ(-7deg) translateY(0)}50%{transform:perspective(760px) rotateY(20deg) rotateZ(-4deg) translateY(-16px)}}
+@keyframes ap3dCb{0%,100%{transform:perspective(760px) rotateY(-34deg) rotateZ(6deg) translateY(0)}50%{transform:perspective(760px) rotateY(-19deg) rotateZ(3deg) translateY(-18px)}}
+/* órbitas de luz atrás da Wan */
+.ap3d-orb{position:absolute;inset:4%;border-radius:50%;border:4px solid rgba(255,236,180,.95);box-shadow:0 0 26px 4px rgba(255,170,60,.8),inset 0 0 22px rgba(255,170,60,.6);animation:ap3dOrb1 11s linear infinite}
+.ap3d-orb.o2{inset:-5%;border-width:3px;border-color:rgba(255,231,163,.7);animation:ap3dOrb2 17s linear infinite}
+.ap3d-orb>i{position:absolute;left:50%;top:-13px;width:24px;height:24px;margin-left:-12px;border-radius:50%;background:#FFF1C4;box-shadow:0 0 16px 6px rgba(255,190,60,.85),0 0 40px 14px rgba(255,120,40,.45)}
+@keyframes ap3dOrb1{from{transform:perspective(900px) rotateX(74deg) rotateY(-14deg) rotateZ(0)}to{transform:perspective(900px) rotateX(74deg) rotateY(-14deg) rotateZ(360deg)}}
+@keyframes ap3dOrb2{from{transform:perspective(900px) rotateX(68deg) rotateY(26deg) rotateZ(360deg)}to{transform:perspective(900px) rotateX(68deg) rotateY(26deg) rotateZ(0)}}
+/* anel giratório com as capas, na seção dos módulos */
+.ap3d-anel{--w:clamp(118px,17vw,230px);--R:calc(var(--w)*1.74);position:relative;height:calc(var(--w)*2.1);margin:0 -24px;overflow:hidden;perspective:1100px;perspective-origin:50% 34%;-webkit-mask:linear-gradient(90deg,transparent 0,#000 14%,#000 86%,transparent 100%);mask:linear-gradient(90deg,transparent 0,#000 14%,#000 86%,transparent 100%)}
+.ap3d-eixo{position:absolute;left:50%;top:46%;width:0;height:0;transform-style:preserve-3d;transform:translateZ(calc(var(--R)*-1)) rotateX(-7deg)}
+.ap3d-gira{position:absolute;left:0;top:0;width:0;height:0;transform-style:preserve-3d;animation:ap3dGira 42s linear infinite}
+.ap3d-anel:hover .ap3d-gira{animation-play-state:paused}
+.ap3d-gira img{position:absolute;left:calc(var(--w)/-2);top:calc(var(--w)*-.74);width:var(--w);height:auto;aspect-ratio:523/774;object-fit:cover;border-radius:14px;-webkit-backface-visibility:hidden;backface-visibility:hidden;transform:rotateY(calc(var(--n)*36deg)) translateZ(var(--R));box-shadow:0 0 0 2px rgba(255,180,29,.8),0 26px 40px -18px rgba(0,0,0,.95)}
+.ap3d-gira img:nth-child(1){--n:0}.ap3d-gira img:nth-child(2){--n:1}.ap3d-gira img:nth-child(3){--n:2}.ap3d-gira img:nth-child(4){--n:3}.ap3d-gira img:nth-child(5){--n:4}.ap3d-gira img:nth-child(6){--n:5}.ap3d-gira img:nth-child(7){--n:6}.ap3d-gira img:nth-child(8){--n:7}.ap3d-gira img:nth-child(9){--n:8}.ap3d-gira img:nth-child(10){--n:9}
+.ap3d-chao{position:absolute;left:50%;bottom:2%;width:min(70%,560px);height:13%;transform:translateX(-50%);border-radius:50%;background:radial-gradient(ellipse,rgba(255,130,40,.5),rgba(255,70,30,.16) 50%,rgba(0,0,0,0) 72%);filter:blur(6px)}
+@keyframes ap3dGira{to{transform:rotateY(-360deg)}}
+/* capas dos módulos: entram girando, inclinam e brilham com o mouse */
+.ap-mods .ap-cover{transform:perspective(700px) rotateX(calc(var(--ry,0)*-12deg)) rotateY(calc(var(--rx,0)*14deg)) translateY(calc(var(--on,0)*-8px)) scale(calc(1 + var(--on,0)*.04));transition:transform .2s ease-out,box-shadow .35s ease}
+.ap-mods .ap-cover::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(circle at var(--gx,50%) var(--gy,0%),rgba(255,255,255,.42),rgba(255,255,255,0) 46%);opacity:var(--on,0);transition:opacity .3s ease}
+.ap-mods article:hover .ap-cover{transform:perspective(700px) rotateX(calc(var(--ry,0)*-12deg)) rotateY(calc(var(--rx,0)*14deg)) translateY(calc(var(--on,0)*-8px)) scale(calc(1 + var(--on,0)*.04));box-shadow:0 34px 54px -22px rgba(0,0,0,.95),0 0 0 2px #FFB41D}
+@keyframes ap3dIn{from{opacity:0;transform:perspective(900px) rotateY(-38deg) rotateX(12deg) translateY(60px) scale(.86)}to{opacity:1;transform:none}}
+@supports (animation-timeline: view()){.ap-mods>article{animation-name:ap3dIn}}
+/* vídeo "por dentro" dentro de um aparelho 3D, com anel de luz e selos flutuando (como o celular do Salgadeiro) */
+.ap-pd-palco{perspective:1300px}
+.ap3d-luz{position:absolute;left:50%;top:46%;width:min(560px,125%);aspect-ratio:1;translate:-50% -50%;border-radius:50%;background:conic-gradient(from 0deg,#FFB41D,#FF613C,#C2171F,#FFB41D,#FF613C,#C2171F,#FFB41D);filter:blur(34px);opacity:.7;animation:apSpin 7s linear infinite;pointer-events:none}
+.ap-pd-moldura{width:min(100%,400px);padding:30px 12px 14px;border-radius:40px;overflow:visible;isolation:auto;transform-style:preserve-3d;background:linear-gradient(160deg,#2A2A2E,#0B0B0C 40%,#1D1D20);box-shadow:0 0 0 2px #3A3A3E,0 0 0 6px #111111,0 40px 80px -30px rgba(0,0,0,.95),0 0 70px rgba(255,120,40,.45)}
+.ap-pd-moldura::before{left:0;top:0;width:100%;height:100%;aspect-ratio:auto;border-radius:40px;background:#060606;box-shadow:0 0 0 2px #2A2A2E;transform:translateZ(-16px);animation:none;z-index:auto}
+.ap-pd-moldura::after{content:"";position:absolute;left:35%;top:10px;width:30%;height:11px;border-radius:999px;background:#000000}
+.ap-pd-tela{border-radius:26px}
+.ap3d-b{position:absolute;z-index:3;display:inline-flex;align-items:center;padding:10px 16px;border-radius:999px;background:#FFF3EA;color:#1C0708;font-weight:900;font-size:15px;white-space:nowrap;box-shadow:0 14px 30px -12px rgba(0,0,0,.8),0 0 0 3px rgba(255,180,29,.5);animation:ap3dFlu 6.5s ease-in-out infinite;pointer-events:none}
+.ap3d-b.b1{left:0;top:9%;--r:-6deg}
+.ap3d-b.b2{right:0;top:27%;--r:5deg;background:#FFB41D;animation-duration:7.5s;animation-delay:-2s}
+.ap3d-b.b3{left:0;bottom:27%;--r:4deg;animation-duration:8s;animation-delay:-4s}
+.ap3d-b.b4{right:1%;bottom:13%;--r:-4deg;background:#E72F2D;color:#FFFFFF;animation-duration:7s;animation-delay:-1s}
+@keyframes ap3dFlu{0%,100%{transform:rotate(var(--r,0deg)) translateY(0)}50%{transform:rotate(var(--r,0deg)) translateY(-12px)}}
+@media (max-width:900px){.ap3d-b{font-size:13px;padding:8px 12px}.ap-pd-moldura{width:min(86%,360px)}}
+.ap-pd.on .ap-pd-moldura{animation:apPdEntra 1.1s cubic-bezier(.2,.9,.25,1.12) both,ap3dMold 9s ease-in-out 1.1s infinite}
+@keyframes ap3dMold{0%,100%{transform:rotateY(-17deg) rotateX(3deg) translateY(0)}50%{transform:rotateY(15deg) rotateX(-2deg) translateY(-10px)}}
+/* cartão do preço com camadas e número em relevo */
+.ap3d-preco{position:relative;transform:perspective(1100px) rotateX(calc(var(--ry,0)*-6deg)) rotateY(calc(var(--rx,0)*8deg));transform-style:preserve-3d;transition:transform .2s ease-out}
+.ap3d-preco>*{transform:translateZ(16px)}
+.ap3d-preco>.ap3d-num{transform:translateZ(44px);margin-bottom:12px;text-shadow:0 1px 0 #B0141B,0 2px 0 #A3121A,0 3px 0 #8F0F16,0 4px 0 #7A0C12,0 5px 0 #6A070C,0 6px 0 #5F090E,0 16px 20px rgba(106,7,12,.3)}
+.ap3d-preco::after{content:"";position:absolute;inset:0;border-radius:30px;pointer-events:none;background:radial-gradient(circle at var(--gx,50%) var(--gy,0%),rgba(255,255,255,.6),rgba(255,255,255,0) 46%);opacity:var(--on,0);transition:opacity .3s ease;transform:translateZ(1px)}
+@keyframes ap3dSway{0%,100%{transform:perspective(1100px) rotateX(2deg) rotateY(-6deg)}50%{transform:perspective(1100px) rotateX(-2deg) rotateY(6deg)}}
+@media (hover:none){.ap3d-preco{animation:ap3dSway 7s ease-in-out infinite}}
+/* moeda da garantia girando */
+.ap3d-moeda{flex:none;width:96px;height:96px;perspective:600px}
+.ap3d-moeda-in{position:relative;width:100%;height:100%;transform-style:preserve-3d;animation:ap3dMoeda 7s cubic-bezier(.6,0,.3,1) infinite}
+.ap3d-moeda-f{position:absolute;inset:0;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;-webkit-backface-visibility:hidden;backface-visibility:hidden;background:radial-gradient(circle at 32% 28%,#FFEFB8,#FFB41D 46%,#B36A00);color:#3A1400;box-shadow:inset 0 0 0 4px rgba(255,255,255,.4),inset 0 0 0 7px rgba(138,70,0,.35),0 14px 26px -10px rgba(0,0,0,.85)}
+.ap3d-moeda-v{transform:rotateY(180deg)}
+@keyframes ap3dMoeda{0%,38%{transform:rotateY(0)}50%,88%{transform:rotateY(180deg)}100%{transform:rotateY(360deg)}}
+/* botões com borda de baixo (relevo) */
+.ap-comprar{--edge:#B06A00}
+.ap-comprar[style*="linear-gradient(90deg, #C2171F"]{--edge:#7A0910}
+.ap-comprar:active{animation:none;transform:translateY(5px);box-shadow:0 1px 0 var(--edge) !important}
+@media (prefers-reduced-motion: reduce){.ap3d-c{opacity:1}*,*::before,*::after{animation:none !important;transition:none !important}.ap-h1-b{clip-path:none}.ap-h1-b::after{transform:none}.ap-cox-grid i,.ap-carimbo,.ap-pct-in{opacity:1}.ap-pct-in{transform:none}.ap-cine,.ap-blackout{display:none}}
 :where(img[width][height]){height:auto}.dc-if{display:contents}.dc-if[hidden]{display:none !important}html{scroll-behavior:smooth}@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
 </style>
 </head>
@@ -383,7 +456,7 @@ details[open] .ap-ans{animation:apFade .35s ease both}
 </div>
 
 <!-- CAPA -->
-<section class="ap-capa">
+<section class="ap-capa" data-ref="setTilt">
 <div class="ap-bg" aria-hidden="true"></div>
 <div class="ap-beams" aria-hidden="true"><i></i><i></i><i></i></div>
 <div class="ap-bokeh" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -411,7 +484,11 @@ details[open] .ap-ans{animation:apFade .35s ease both}
 <div class="ap-ring r1"></div>
 <div class="ap-ripple"></div>
 <div class="ap-ripple d2"></div>
+<div class="ap3d-orb"><i></i></div>
+<div class="ap3d-orb o2"><i></i></div>
 </div>
+<div class="ap3d-c c1" aria-hidden="true"><img width="523" height="774" src="assets/img/modulos/recheios.webp" alt="" loading="lazy"></div>
+<div class="ap3d-c c2" aria-hidden="true"><img width="523" height="774" src="assets/img/modulos/compacta-pop.webp" alt="" loading="lazy"></div>
 <div class="ap-wan"><img width="1110" height="1896" src="assets/img/wanessa-capa.webp" alt="Wanessa Massafelli sorrindo, de dólmã azul-marinho com o bordado da Compacta Print"></div>
 <div class="ap-fog" aria-hidden="true"><i></i><i></i><i></i></div>
 </div>
@@ -549,64 +626,76 @@ details[open] .ap-ans{animation:apFade .35s ease both}
 <h2 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 900; font-size: clamp(34px, 4.2vw, 56px); line-height: 1.05; letter-spacing: -0.015em">7 módulos, 14 aulas: da caixa à venda</h2>
 <p style="margin: 0; color: #F2DCD0">São 3h40 de aula com a Wanessa, na ordem certa pra sua Pop 4.0 sair produzindo.</p>
 </div>
+<div class="ap3d-anel" aria-hidden="true"><div class="ap3d-eixo"><div class="ap3d-gira">
+<img width="523" height="774" src="assets/img/modulos/comece-aqui.webp" alt="" loading="lazy">
+<img width="523" height="774" src="assets/img/modulos/compacta-pop.webp" alt="" loading="lazy">
+<img width="523" height="774" src="assets/img/modulos/massas.webp" alt="" loading="lazy">
+<img width="523" height="774" src="assets/img/modulos/recheios.webp" alt="" loading="lazy">
+<img width="523" height="774" src="assets/img/modulos/empanamento.webp" alt="" loading="lazy">
+<img width="523" height="774" src="assets/img/modulos/congelamento.webp" alt="" loading="lazy">
+<img width="523" height="774" src="assets/img/modulos/fritura.webp" alt="" loading="lazy">
+<img width="523" height="784" src="assets/img/modulos/churros.webp" alt="" loading="lazy">
+<img width="523" height="774" src="assets/img/modulos/como-vender.webp" alt="" loading="lazy">
+<img width="523" height="774" src="assets/img/modulos/comunidade.webp" alt="" loading="lazy">
+</div></div><div class="ap3d-chao"></div></div>
 <div class="ap-mods">
 
 <article style="display: flex; flex-direction: column; gap: 12px; min-width: 0">
-<div class="ap-cover"><img width="523" height="774" src="assets/img/modulos/comece-aqui.webp" alt="Capa do módulo Comece aqui, com a Wanessa apresentando o curso ao lado da Pop 4.0" loading="lazy" decoding="async"><div class="ap-label">Comece aqui!</div></div>
+<div class="ap-cover" data-ref="setTilt"><img width="523" height="774" src="assets/img/modulos/comece-aqui.webp" alt="Capa do módulo Comece aqui, com a Wanessa apresentando o curso ao lado da Pop 4.0" loading="lazy" decoding="async"><div class="ap-label">Comece aqui!</div></div>
 <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.02em; color: #FFCB5C">Módulo 1 · 1 aula · 1 min</span>
 <p style="margin: 0; font-size: 15px; line-height: 1.45; color: #F2DCD0">A Wan apresenta o curso e o caminho até a sua primeira produção.</p>
 </article>
 
 <article style="display: flex; flex-direction: column; gap: 12px; min-width: 0">
-<div class="ap-cover"><img width="523" height="774" src="assets/img/modulos/compacta-pop.webp" alt="Capa do módulo A Compacta Pop 4.0, com a modeladora" loading="lazy" decoding="async"></div>
+<div class="ap-cover" data-ref="setTilt"><img width="523" height="774" src="assets/img/modulos/compacta-pop.webp" alt="Capa do módulo A Compacta Pop 4.0, com a modeladora" loading="lazy" decoding="async"></div>
 <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.02em; color: #FFCB5C">Módulo 2 · 1 aula · 13 min</span>
 <p style="margin: 0; font-size: 15px; line-height: 1.45; color: #F2DCD0">Bicos e mandíbulas: o que cada peça faz, qual usar e como montar.</p>
 </article>
 
 <article style="display: flex; flex-direction: column; gap: 12px; min-width: 0">
-<div class="ap-cover"><img width="523" height="774" src="assets/img/modulos/massas.webp" alt="Capa do módulo Massas, com a Wanessa e a masseira" loading="lazy" decoding="async"></div>
+<div class="ap-cover" data-ref="setTilt"><img width="523" height="774" src="assets/img/modulos/massas.webp" alt="Capa do módulo Massas, com a Wanessa e a masseira" loading="lazy" decoding="async"></div>
 <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.02em; color: #FFCB5C">Módulo 3 · 2 aulas · 27 min</span>
 <p style="margin: 0; font-size: 15px; line-height: 1.45; color: #F2DCD0">Os insumos certos e o preparo da massa no ponto pra máquina.</p>
 </article>
 
 <article style="display: flex; flex-direction: column; gap: 12px; min-width: 0">
-<div class="ap-cover"><img width="523" height="774" src="assets/img/modulos/recheios.webp" alt="Capa do módulo Recheios e modelagem, com uma coxinha aberta na mão" loading="lazy" decoding="async"></div>
+<div class="ap-cover" data-ref="setTilt"><img width="523" height="774" src="assets/img/modulos/recheios.webp" alt="Capa do módulo Recheios e modelagem, com uma coxinha aberta na mão" loading="lazy" decoding="async"></div>
 <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.02em; color: #FFCB5C">Módulo 4 · 5 aulas · 1h50</span>
 <p style="margin: 0; font-size: 15px; line-height: 1.45; color: #F2DCD0">Recheio de frango em 20 g, 100 g e 200 g, bolinhas, risole e enroladinho.</p>
 </article>
 
 <article style="display: flex; flex-direction: column; gap: 12px; min-width: 0">
-<div class="ap-cover"><img width="523" height="774" src="assets/img/modulos/empanamento.webp" alt="Capa do módulo Empanamento, com duas coxinhas empanadas na mão" loading="lazy" decoding="async"></div>
+<div class="ap-cover" data-ref="setTilt"><img width="523" height="774" src="assets/img/modulos/empanamento.webp" alt="Capa do módulo Empanamento, com duas coxinhas empanadas na mão" loading="lazy" decoding="async"></div>
 <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.02em; color: #FFCB5C">Módulo 5 · 1 aula · 13 min</span>
 <p style="margin: 0; font-size: 15px; line-height: 1.45; color: #F2DCD0">Como empanar os salgados que saem da sua Pop 4.0.</p>
 </article>
 
 <article style="display: flex; flex-direction: column; gap: 12px; min-width: 0">
-<div class="ap-cover"><img width="523" height="774" src="assets/img/modulos/congelamento.webp" alt="Capa do módulo Congelamento e armazenamento, com pacotes de salgados congelados" loading="lazy" decoding="async"></div>
+<div class="ap-cover" data-ref="setTilt"><img width="523" height="774" src="assets/img/modulos/congelamento.webp" alt="Capa do módulo Congelamento e armazenamento, com pacotes de salgados congelados" loading="lazy" decoding="async"></div>
 <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.02em; color: #FFCB5C">Módulo 6 · Aula 10 · 20 min</span>
 <p style="margin: 0; font-size: 15px; line-height: 1.45; color: #F2DCD0">Como congelar e armazenar a sua produção.</p>
 </article>
 
 <article style="display: flex; flex-direction: column; gap: 12px; min-width: 0">
-<div class="ap-cover"><img width="523" height="774" src="assets/img/modulos/fritura.webp" alt="Capa da aula Fritura, com uma fritadeira cheia de bolinhas" loading="lazy" decoding="async"></div>
+<div class="ap-cover" data-ref="setTilt"><img width="523" height="774" src="assets/img/modulos/fritura.webp" alt="Capa da aula Fritura, com uma fritadeira cheia de bolinhas" loading="lazy" decoding="async"></div>
 <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.02em; color: #FFCB5C">Módulo 6 · Aula 11 · 24 min</span>
 <p style="margin: 0; font-size: 15px; line-height: 1.45; color: #F2DCD0">Como fritar do jeito certo na hora de vender.</p>
 </article>
 
 <article style="display: flex; flex-direction: column; gap: 12px; min-width: 0">
-<div class="ap-cover"><img width="523" height="784" src="assets/img/modulos/churros.webp" alt="Capa Churros, com a Wanessa segurando uma lata de doce de leite e churros na frente" loading="lazy" decoding="async"></div>
+<div class="ap-cover" data-ref="setTilt"><img width="523" height="784" src="assets/img/modulos/churros.webp" alt="Capa Churros, com a Wanessa segurando uma lata de doce de leite e churros na frente" loading="lazy" decoding="async"></div>
 <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.02em; color: #FFCB5C">Doces na Pop 4.0</span>
 <p style="margin: 0; font-size: 15px; line-height: 1.45; color: #F2DCD0">Churros feitos na modeladora, com doce de leite.</p>
 </article>
 
 <article style="display: flex; flex-direction: column; gap: 12px; min-width: 0">
-<div class="ap-cover"><img width="523" height="774" src="assets/img/modulos/como-vender.webp" alt="Capa do módulo Como vender, com a Wanessa segurando caixas de churros prontas pra vender" loading="lazy"></div>
+<div class="ap-cover" data-ref="setTilt"><img width="523" height="774" src="assets/img/modulos/como-vender.webp" alt="Capa do módulo Como vender, com a Wanessa segurando caixas de churros prontas pra vender" loading="lazy"></div>
 <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.02em; color: #FFCB5C">Módulo 7 · 2 aulas · 12 min</span>
 <p style="margin: 0; font-size: 15px; line-height: 1.45; color: #F2DCD0">Como vender o que você produz, e o encerramento com a Wan.</p>
 </article>
 
 <article style="display: flex; flex-direction: column; gap: 12px; min-width: 0">
-<div class="ap-cover"><img width="523" height="774" src="assets/img/modulos/comunidade.webp" alt="Capa da Comunidade, com um celular mostrando o grupo de alunos e fotos da produção deles" loading="lazy"></div>
+<div class="ap-cover" data-ref="setTilt"><img width="523" height="774" src="assets/img/modulos/comunidade.webp" alt="Capa da Comunidade, com um celular mostrando o grupo de alunos e fotos da produção deles" loading="lazy"></div>
 <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.02em; color: #FFCB5C">Junto com o curso</span>
 <p style="margin: 0; font-size: 15px; line-height: 1.45; color: #F2DCD0">Comunidade no WhatsApp e suporte do curso pra tirar suas dúvidas.</p>
 </article>
@@ -656,6 +745,7 @@ details[open] .ap-ans{animation:apFade .35s ease both}
 <div class="ap-pd-anel a2" aria-hidden="true"></div>
 <div class="ap-pd-onda" aria-hidden="true"></div>
 <div class="ap-pd-onda o2" aria-hidden="true"></div>
+<div class="ap3d-luz" aria-hidden="true"></div>
 <div class="ap-pd-moldura">
 <div class="ap-pd-tela">
 <video class="ap-pd-video" src="assets/video/por-dentro-do-curso.mp4" poster="assets/img/por-dentro-capa.jpg" muted="" loop="" playsinline="" preload="none" aria-label="Vídeo sem som: tour pela área de membros do ABC da Pop 4.0, com as capas dos módulos e a lista de aulas"></video>
@@ -667,8 +757,10 @@ details[open] .ap-ans{animation:apFade .35s ease both}
 </div>
 </div>
 </div>
-<span class="ap-pd-chip c1"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFB41D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path></svg>Área de membros real</span>
-<span class="ap-pd-chip c2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFB41D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M10 8.5v7l6-3.5z" fill="#FFB41D"></path></svg>Aulas em vídeo</span>
+<span class="ap3d-b b1" aria-hidden="true">Área de membros real</span>
+<span class="ap3d-b b2" aria-hidden="true">Aulas em vídeo</span>
+<span class="ap3d-b b3" aria-hidden="true">Acesso na hora</span>
+<span class="ap3d-b b4" aria-hidden="true">No celular ou PC</span>
 <p class="ap-pd-nota">Vídeo sem som, filmado na tela da área de membros.</p>
 </div>
 </div>
@@ -811,11 +903,11 @@ details[open] .ap-ans{animation:apFade .35s ease both}
 </div>
 </div>
 
-<div style="flex: 1 1 400px; max-width: 480px; min-width: 0; margin: 0 auto; background: #FFF3EA; color: #1C0708; border-radius: 30px; padding: 40px 32px 34px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; box-shadow: 0 0 0 2px #FFB41D, 0 30px 80px -30px rgba(255,97,60,0.55)">
+<div class="ap3d-preco" data-ref="setTilt" style="flex: 1 1 400px; max-width: 480px; min-width: 0; margin: 0 auto; background: #FFF3EA; color: #1C0708; border-radius: 30px; padding: 40px 32px 34px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; box-shadow: 0 0 0 2px #FFB41D, 0 30px 80px -30px rgba(255,97,60,0.55)">
 <span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; background: #C2171F; color: #FFFFFF; font-size: 15px; font-weight: 800">Esquenta Black Friday · 77% off</span>
 <p style="margin: 6px 0 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 800; font-size: 34px; line-height: 1; color: #6A2E22">de <span class="ap-strike">R$ 299,99</span></p>
 <p style="margin: 6px 0 0; font-size: 17px; font-weight: 700">por</p>
-<div style="font-family: 'Playfair Display', Georgia, serif; font-weight: 900; font-size: clamp(72px, 9vw, 108px); line-height: 0.95; letter-spacing: -0.02em; color: #C2171F">R$ 67</div>
+<div class="ap3d-num" style="font-family: 'Playfair Display', Georgia, serif; font-weight: 900; font-size: clamp(72px, 9vw, 108px); line-height: 0.95; letter-spacing: -0.02em; color: #C2171F">R$ 67</div>
 <p style="margin: 0; font-size: 16px; color: #6A2E22">Pagamento único, sem mensalidade. Pix ou cartão.</p>
 <p style="margin: 0; font-size: 15px; font-weight: 700; color: #C2171F">Você economiza R$ 232,99</p>
 <a class="ap-btn ap-comprar" href="#preco" data-checkout="principal" data-on-click="clicouCompra" style="display: flex; align-items: center; justify-content: center; width: 100%; min-height: 64px; margin-top: 8px; padding: 0 24px; box-sizing: border-box; background: linear-gradient(90deg, #C2171F, #E72F2D); color: #FFFFFF; border-radius: 999px; font-weight: 900; font-size: 21px; text-decoration: none; box-shadow: 0 14px 30px -12px rgba(194,23,31,0.7)">COMPRAR AGORA</a>
@@ -830,7 +922,7 @@ details[open] .ap-ans{animation:apFade .35s ease both}
 <!-- GARANTIA -->
 <section class="ap-wrap" style="padding-top: 72px">
 <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px 32px; padding: 32px; border: 1px solid #561818; border-radius: 26px">
-<div style="flex: none; width: 92px; height: 92px; border-radius: 50%; border: 2px solid #FFB41D; color: #FFB41D; display: flex; flex-direction: column; align-items: center; justify-content: center"><span style="font-family: 'Playfair Display', Georgia, serif; font-weight: 900; font-size: 36px; line-height: 1">7</span><span style="font-size: 12px; font-weight: 700">dias</span></div>
+<div class="ap3d-moeda"><div class="ap3d-moeda-in"><div class="ap3d-moeda-f"><span style="font-family: 'Playfair Display', Georgia, serif; font-weight: 900; font-size: 40px; line-height: 1">7</span><span style="font-size: 13px; font-weight: 800">dias</span></div><div class="ap3d-moeda-f ap3d-moeda-v" aria-hidden="true"><svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#3A1400" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"></path><path d="m9 12 2 2 4-4"></path></svg></div></div></div>
 <div style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
 <h3 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 800; font-size: 26px">Garantia incondicional de 7 dias</h3>
 <p style="margin: 0; color: #F2DCD0; max-width: 44em">Entre, assista às aulas e teste na sua Pop 4.0. Se não for pra você, peça o reembolso em até 7 dias e receba 100% do valor de volta, sem perguntas.</p>
@@ -922,10 +1014,14 @@ details[open] .ap-ans{animation:apFade .35s ease both}
 <section style="position: relative; overflow: hidden; background: linear-gradient(160deg, #7A0910 0%, #C2171F 50%, #E72F2D 100%); padding: 96px 0">
 <div aria-hidden="true" style="position: absolute; left: 50%; top: 50%; width: 900px; aspect-ratio: 1; transform: translate(-50%, -50%); pointer-events: none">
 <div class="ap-disc" style="opacity: 0.55"></div>
+<div class="ap3d-orb"><i></i></div>
+<div class="ap3d-orb o2"><i></i></div>
 <div class="ap-ring r1"></div>
 <div class="ap-ripple"></div>
 <div class="ap-ripple d2"></div>
 </div>
+<div class="ap3d-c f1" aria-hidden="true"><img width="523" height="784" src="assets/img/modulos/churros.webp" alt="" loading="lazy"></div>
+<div class="ap3d-c f2" aria-hidden="true"><img width="523" height="774" src="assets/img/modulos/como-vender.webp" alt="" loading="lazy"></div>
 <div class="ap-wrap" style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center">
 <img width="1042" height="517" src="assets/img/logo-abc-da-pop.webp" alt="ABC da Pop 4.0, Wanessa Massafelli" style="display: block; height: clamp(70px, 9vw, 110px); width: auto; filter: drop-shadow(0 8px 20px rgba(50,0,0,0.45))" loading="lazy" decoding="async">
 <h2 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-weight: 900; font-size: clamp(36px, 4.8vw, 64px); line-height: 1.02; letter-spacing: -0.015em; max-width: 14em; color: #FFFFFF">Sua Pop 4.0 não nasceu pra ficar parada</h2>
@@ -1124,6 +1220,33 @@ class Component extends DCLogic {
           try { v.pause(); } catch (e) {}
           this.setState({ pdPausado: true });
         }
+      },
+      setTilt: (el) => {
+        if (!el || el._tilt || typeof window === 'undefined' || !window.matchMedia) return;
+        if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        el._tilt = true;
+        let raf = 0, x = 0, y = 0;
+        const aplica = () => {
+          raf = 0;
+          el.style.setProperty('--rx', x.toFixed(3));
+          el.style.setProperty('--ry', y.toFixed(3));
+          el.style.setProperty('--gx', ((x + 1) * 50).toFixed(1) + '%');
+          el.style.setProperty('--gy', ((y + 1) * 50).toFixed(1) + '%');
+        };
+        el.addEventListener('pointermove', (e) => {
+          const r = el.getBoundingClientRect();
+          if (!r.width || !r.height) return;
+          x = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width) * 2 - 1));
+          y = Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height) * 2 - 1));
+          el.style.setProperty('--on', '1');
+          if (!raf) raf = requestAnimationFrame(aplica);
+        });
+        el.addEventListener('pointerleave', () => {
+          x = 0; y = 0;
+          el.style.setProperty('--on', '0');
+          if (!raf) raf = requestAnimationFrame(aplica);
+        });
       },
       setPreco: (el) => this.vigia(el, 'Preco', () => this.props.segundosNoPreco ?? 2),
       setQuem: (el) => this.vigia(el, 'Quem', () => this.props.segundosNaWanessa ?? 7),
